@@ -19,7 +19,7 @@ subroute = (app, path, fn) ->
   unless sapp._methods.options?
     sapp.options (req, res) -> res.header('Allow', allowed).end()
     allowed = (Object.keys sapp._methods).join(',').toUpperCase()
-  sapp.all (req, res) -> res.send 405
+  sapp.all (req, res) -> res.header('Allow', allowed).sendStatus(405)
  
 subroute.install = (app = (require 'express').application) -> app.subroute = curryThis subroute
  
